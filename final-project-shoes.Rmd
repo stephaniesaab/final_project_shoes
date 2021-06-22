@@ -1,0 +1,53 @@
+---
+title: "Shoes"
+author: "Stephanie Saab"
+date: "21/06/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggthemes)
+library(httr)
+library(distill)
+library(lubridate)
+library(dbplyr)
+library(janitor)
+library(skimr)
+library(jsonlite)
+```
+```{r read}
+
+x<-read_csv("archive.zip") #male shoes
+y<-read_csv("7210_1.csv.zip") #female shoes
+```
+ 
+```{r cleaning}
+#Cleaning up x
+
+x %>% 
+  select(brand,dateadded,prices_amountmin,prices_amountmax,prices_currency,prices_issale) %>% 
+  mutate(gender="men")
+```
+
+
+```{r cleaning}
+#Cleaning up y
+
+y %>% 
+  select(brand,dateAdded,prices.amountMin,prices.amountMax,prices.currency,prices.isSale) %>% 
+  mutate(gender="women") %>% 
+  #rename(prices_amountmin="prices.amountMin",prices_amountmax="prices.amountMax",prices_currency="prices.currency",prices_issale="prices.isSale")
+  ggplot(mapping=aes(x=prices.amountMax,y=dateAdded,color=prices.isSale))+
+  geom_point()
+
+#full_join(x,y,by=NULL,copy=FALSE)
+  
+
+```
+
+```{r}
+
+```
+
