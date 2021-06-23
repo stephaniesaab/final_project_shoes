@@ -28,7 +28,8 @@ y<-read_csv("7210_1.csv.zip") #female shoes
 
 x %>% 
   select(brand,dateadded,prices_amountmin,prices_amountmax,prices_currency,prices_issale) %>% 
-  mutate(gender="men")
+  mutate(gender="men") %>% 
+  mutate(dateadded=as.Date(dateadded),prices_amountmin=as.double(prices_amountmin),prices_amountmax=as.double(prices_amountmax),price_issale=as.boolean()
 ```
 
 
@@ -38,16 +39,21 @@ x %>%
 y %>% 
   select(brand,dateAdded,prices.amountMin,prices.amountMax,prices.currency,prices.isSale) %>% 
   mutate(gender="women") %>% 
-  #rename(prices_amountmin="prices.amountMin",prices_amountmax="prices.amountMax",prices_currency="prices.currency",prices_issale="prices.isSale")
-  ggplot(mapping=aes(x=prices.amountMax,y=dateAdded,color=prices.isSale))+
-  geom_point()
+  rename(prices_amountmin="prices.amountMin",prices_amountmax="prices.amountMax",prices_currency="prices.currency",prices_issale="prices.isSale") %>% 
+  drop_na() %>% 
+  mutate(brand=as.character(brand)) %>% 
+  mutate(dateadded=as.Date(dateAdded)) %>% 
+  select(-dateAdded)
+  
+  
+  #format(dateAdded,"%m/%Y")
+  #sub(".*?/","",)
+  #mutate(date = parse_factor(dateAdded))
+
 
 #full_join(x,y,by=NULL,copy=FALSE)
   
 
 ```
 
-```{r}
-
-```
 
