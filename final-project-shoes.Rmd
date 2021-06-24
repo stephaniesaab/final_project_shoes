@@ -44,7 +44,7 @@ shoes2<-full_join(x,y,by=c("dateadded", "prices_amountmin", "prices_amountmax", 
 shoes3<-shoes2 %>% 
   mutate(price_avg=rowMeans(shoes2[c(2,3)],na.rm=T)) %>% 
   mutate(price_avg=round(price_avg,2)) %>%
-  select(-prices_amountmax,-prices_amountmin) %>% 
+  #select(-prices_amountmax,-prices_amountmin) %>% 
   filter(prices_currency=="USD") %>% 
   arrange(price_avg) %>% 
   filter(price_avg<=1500) %>% 
@@ -59,6 +59,10 @@ shoes3 %>%
   geom_point(alpha=0.4)+
   facet_wrap(~gender)
 
-
+shoes3 %>% 
+  ggplot(mapping=aes(x=dateadded,y=price_avg,ymin=prices_amountmin,ymax=prices_amountmax,color=prices_issale))+
+  geom_pointrange(alpha=0.5,width=0.2,size=1)+
+  facet_wrap(~prices_issale)
+#geom_pointrange(data=d, mapping=aes(x=drink, y=mean, ymin=upper, ymax=lower), width=0.2, size=1, color="blue", fill="white", shape=22)
 ```
 
